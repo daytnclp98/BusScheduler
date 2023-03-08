@@ -7,19 +7,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.busschedule.database.schedule.Schedule
 import com.example.busschedule.database.schedule.ScheduleDao
+
+
 @Database(entities = arrayOf(Schedule::class), version = 1)
-abstract class AppDataBse : RoomDatabase(){
+abstract class AppDataBase : RoomDatabase(){
     abstract fun scheduleDao(): ScheduleDao
 
     companion object{
         @Volatile
-        private var INSTANCE: AppDataBse? = null
+        private var INSTANCE: AppDataBase? = null
 
-        fun getDatabase(context: Context): AppDataBse{
-            return INSTANCE ?: synchronized(this){
+        fun getDatabase(context: Context): AppDataBase {
+            return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context,
-                    AppDataBse:: class.java,
+                    AppDataBase:: class.java,
                     "app_database")
                     .createFromAsset("database/bus_schedule.db")
                     .build()
